@@ -21,9 +21,15 @@ class Timer {
 			- to the instance of class.
 		*/
 
-		this.intervalId = setInterval(this.tick, 1000); // calls the method every 1kms which is one second
-		// it also returns integer ID which represents this interval going on - which can
-		// later be used to cancel out this timer.
+		// For first time it produces an delay of 1 second which can be avoided by
+		this.tick();
+		// ... manually calling it at the start.
+
+		this.intervalId = setInterval(this.tick, 1000);
+		/*
+		 Calls the method every 1kms which is one second it also returns integer ID which represents this interval going on - which can
+		 later be used to cancel out this timer.
+		*/
 	};
 
 	pause = () => {
@@ -31,12 +37,21 @@ class Timer {
 	};
 
 	tick = () => {
-		console.log("Coming up every second.");
+		/*
+			- Two interesting approaches to the updating problem. 
+			- One is to grab the value from DOM store it in the instance variable then subtract it every single time as second passes and then update the DOM as well.
+			- Down side is we have to add event listener if user were to add new timer value we would have to watch for it every time.
+			- Second approach is to get data from DOM and update it directly to the DOM.
+			- This way we don't have to add event listener as we're getting directly from DOM every time.
+		*/
+
+		this.durationText.value = parseFloat(this.durationText.value) - 1;
+		// used parse float to convert string to decimal number.
 	};
 }
 
 let startButton = document.querySelector("#start-button");
 let pauseButton = document.querySelector("#pause-button");
-let durationText = document.querySelector(".duration-input").value;
+let durationText = document.querySelector(".duration-input");
 
 let myTimer = new Timer(durationText, startButton, pauseButton);
