@@ -48,7 +48,8 @@ class Timer {
 		// this.durationText.value = parseFloat(this.durationText.value) - 1;
 		// used parse float to convert string to decimal number.
 		// Better way using getter and setter - magical syntax really nice.
-		this.timeRemaining = this.timeRemaining - 1;
+		if (this.timeRemaining === 0) this.pause();
+		else this.timeRemaining = this.timeRemaining - 1;
 	};
 
 	get timeRemaining() {
