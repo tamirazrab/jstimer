@@ -45,9 +45,19 @@ class Timer {
 			- This way we don't have to add event listener as we're getting directly from DOM every time.
 		*/
 
-		this.durationText.value = parseFloat(this.durationText.value) - 1;
+		// this.durationText.value = parseFloat(this.durationText.value) - 1;
 		// used parse float to convert string to decimal number.
+		// Better way using getter and setter - magical syntax really nice.
+		this.timeRemaining = this.timeRemaining - 1;
 	};
+
+	get timeRemaining() {
+		return parseFloat(this.durationText.value);
+	}
+
+	set timeRemaining(time) {
+		this.durationText.value = time;
+	}
 }
 
 let startButton = document.querySelector("#start-button");
