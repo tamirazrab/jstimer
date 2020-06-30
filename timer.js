@@ -33,7 +33,7 @@ class Timer {
 		this.tick();
 		// ... manually calling it at the start.
 
-		this.intervalId = setInterval(this.tick, 1000);
+		this.intervalId = setInterval(this.tick, 50);
 		/*
 		 Calls the method every 1kms which is one second it also returns integer ID which represents this interval going on - which can
 		 later be used to cancel out this timer.
@@ -60,7 +60,7 @@ class Timer {
 			this.pause();
 			if (this.onComplete) this.onComplete();
 		} else {
-			this.timeRemaining = this.timeRemaining - 1;
+			this.timeRemaining = this.timeRemaining - 0.05;
 			if (this.onTick) this.onTick();
 		}
 	};
@@ -70,6 +70,6 @@ class Timer {
 	}
 
 	set timeRemaining(time) {
-		this.durationText.value = time;
+		this.durationText.value = time.toFixed(3);
 	}
 }
