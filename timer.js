@@ -1,8 +1,14 @@
 class Timer {
-	constructor(durationText, startButton, pauseButton) {
+	constructor(durationText, startButton, pauseButton, callbacks) {
 		this.durationText = durationText;
 		this.startButton = startButton;
 		this.pauseButton = pauseButton;
+
+		if (callbacks) {
+			this.onStart = callbacks.onStart;
+			this.onTick = callbacks.onTick;
+			this.onComplete = callbacks.onComplete;
+		}
 
 		startButton.addEventListener("click", this.start);
 		pauseButton.addEventListener("click", this.pause);
@@ -20,6 +26,8 @@ class Timer {
 			- outside of that arrow function is constructor in which this points
 			- to the instance of class.
 		*/
+
+		if (this.onStart) this.onStart();
 
 		// For first time it produces an delay of 1 second which can be avoided by
 		this.tick();
@@ -48,8 +56,13 @@ class Timer {
 		// this.durationText.value = parseFloat(this.durationText.value) - 1;
 		// used parse float to convert string to decimal number.
 		// Better way using getter and setter - magical syntax really nice.
-		if (this.timeRemaining === 0) this.pause();
-		else this.timeRemaining = this.timeRemaining - 1;
+		if (this.timeRemaining === 0) {
+			this.pause();
+			if (this.onComplete) this.onComplete();
+		} else {
+			this.timeRemaining = this.timeRemaining - 1;
+			if (this.onTick) this.onTick();
+		}
 	};
 
 	get timeRemaining() {
