@@ -27,8 +27,7 @@ class Timer {
 			- to the instance of class.
 		*/
 
-		if (this.onStart) this.onStart();
-
+		if (this.onStart) this.onStart(this.timeRemaining);
 		// For first time it produces an delay of 1 second which can be avoided by
 		this.tick();
 		// ... manually calling it at the start.
@@ -61,7 +60,7 @@ class Timer {
 			if (this.onComplete) this.onComplete();
 		} else {
 			this.timeRemaining = this.timeRemaining - 0.05;
-			if (this.onTick) this.onTick();
+			if (this.onTick) this.onTick(this.timeRemaining);
 		}
 	};
 
